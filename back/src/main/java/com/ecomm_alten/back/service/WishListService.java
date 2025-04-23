@@ -1,5 +1,8 @@
 package com.ecomm_alten.back.service;
 
+import com.ecomm_alten.back.exception.AlreadyInWishListException;
+import com.ecomm_alten.back.exception.ProductNotFoundException;
+import com.ecomm_alten.back.exception.UserNotFoundException;
 import com.ecomm_alten.back.model.Product;
 import com.ecomm_alten.back.model.User;
 import com.ecomm_alten.back.model.WishListItem;
@@ -31,16 +34,16 @@ public class WishListService {
         log.info("Adding product with ID: {} to wishlist for user: {}", productId, userEmail);
         User user = userRepo.findByEmail(userEmail).orElseThrow(() -> {
             log.error("User with email: {} not found", userEmail);
-            return new IllegalArgumentException("User not found");
+            return new UserNotFoundException(userEmail);
         });
         Product p = prodRepo.findById(productId).orElseThrow(() -> {
             log.error("Product with ID: {} not found", productId);
-            return new IllegalArgumentException("Product not found");
+            return new ProductNotFoundException("Product not found with id " + productId);
         });
 
         if (wishRepo.findByUserEmailAndProductId(userEmail, productId).isPresent()) {
             log.warn("Product with ID: {} already exists in wishlist for user: {}", productId, userEmail);
-            throw new IllegalStateException("Déjà en liste d'envie");
+            throw new AlreadyInWishListException(productId);
         }
         WishListItem item = new WishListItem();
         item.setUser(user);

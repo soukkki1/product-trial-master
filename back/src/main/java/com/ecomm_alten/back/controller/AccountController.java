@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/account")
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/account")
 public class AccountController {
     private final UserService userService;
 
     @PostMapping
     public ResponseEntity<Void> signup(@Valid @RequestBody SignupRequest dto) {
+
         userService.register(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

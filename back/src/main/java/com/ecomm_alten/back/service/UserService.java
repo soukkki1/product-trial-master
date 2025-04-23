@@ -1,10 +1,13 @@
 package com.ecomm_alten.back.service;
 
 import com.ecomm_alten.back.dto.SignupRequest;
+import com.ecomm_alten.back.exception.UserAlreadyExistsException;
+import com.ecomm_alten.back.exception.UserNotFoundException;
 import com.ecomm_alten.back.model.Role;
 import com.ecomm_alten.back.model.User;
 import com.ecomm_alten.back.repository.UserRepository;
 import jakarta.validation.constraints.NotNull;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,7 +44,7 @@ public class UserService implements UserDetailsService {
 
         if (userRepository.existsByEmail(dto.email())) {
             log.warn("Attempt to register with already used email: {}", dto.email());
-            throw new IllegalArgumentException("Email already in use: " + dto.email());
+            throw new UserAlreadyExistsException(dto.email());
         }
 
         User user = new User();
@@ -77,7 +80,7 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> {
                     log.error("User not found for email: {}", email);
-                    return new UsernameNotFoundException("User not found: " + email);
+                    return new UserNotFoundException("User not found: " + email);
                 });
 
         List<GrantedAuthority> auth = convertRolesToAuthorities(user.getRoles());

@@ -5,6 +5,8 @@ import com.ecomm_alten.back.model.Product;
 import com.ecomm_alten.back.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -27,11 +29,11 @@ public class ProductService {
         return savedProduct;
     }
 
-    public List<Product> getAllProducts() {
+    public Page<Product> getAllProducts(Pageable pageable) {
         log.info("Fetching all products");
         List<Product> products = productRepository.findAll();
         log.info("Fetched {} products", products.size());
-        return products;
+        return productRepository.findAll(pageable);
     }
 
     public Product getProductById(Long id) {
