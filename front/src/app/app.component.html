@@ -6,8 +6,18 @@
         {{ title }}
     </div>
     <div class="p-toolbar-group-end">
-        <a routerLink="/cart" class="cart-link">
+        <a routerLink="/cart" 
+        class="cart-link inline-flex items-center flex-none"
+        >
         <i class="pi pi-shopping-cart" style="font-size: 2rem"></i>
+        <ng-container *ngIf="count$ | async as count">
+            <span
+            class="cart-count ml-1 px-2 bg-red-600 text-white rounded-full text-xs"
+            *ngIf="count > 0"
+          >
+            {{ count }}
+          </span>
+        </ng-container>
         </a>
     </div>
 </p-toolbar>
