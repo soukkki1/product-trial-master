@@ -1,0 +1,52 @@
+<div class="max-w-sm mx-auto p-4">
+  <h2 class="text-xl font-semibold mb-4">Contact</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label class="block mb-2">
+      Email <span class="text-red-600">*</span>
+      <input
+        type="email"
+        formControlName="email"
+        class="w-full border rounded p-1"
+        [class.border-red-500]="submitted && f.email.invalid"
+      />
+    </label>
+    <div
+      *ngIf="submitted && f.email.invalid"
+      class="text-red-600 text-sm mb-2"
+    >
+      <div *ngIf="f.email.errors?.required">Email requis.</div>
+      <div *ngIf="f.email.errors?.email">Format invalide.</div>
+    </div>
+
+    <label class="block mb-2">
+      Message <span class="text-red-600">*</span>
+      <textarea
+        formControlName="message"
+        rows="4"
+        class="w-full border rounded p-1"
+        [class.border-red-500]="submitted && f.message.invalid"
+      ></textarea>
+    </label>
+    <div
+      *ngIf="submitted && f.message.invalid"
+      class="text-red-600 text-sm mb-2"
+    >
+      <div *ngIf="f.message.errors?.required">Message requis.</div>
+      <div *ngIf="f.message.errors?.maxlength">
+        Doit contenir au maximum 300 caractères.
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="bg-blue-600 text-white px-4 py-1 rounded"
+    >
+      Envoyer
+    </button>
+  </form>
+
+  <p *ngIf="success()" class="mt-4 text-green-600">
+    Demande de contact envoyée avec succès.
+  </p>
+</div>
