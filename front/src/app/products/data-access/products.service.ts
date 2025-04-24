@@ -8,7 +8,7 @@ import { catchError, Observable, of, tap } from "rxjs";
 }) export class ProductsService {
 
     private readonly http = inject(HttpClient);
-    private readonly path = "/api/products";
+    private readonly path = "/api/v1/products";
     
     private readonly _products = signal<Product[]>([]);
 

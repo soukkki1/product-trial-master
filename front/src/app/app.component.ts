@@ -5,6 +5,9 @@ import { RouterModule } from "@angular/router";
 import { SplitterModule } from 'primeng/splitter';
 import { ToolbarModule } from 'primeng/toolbar';
 import { PanelMenuComponent } from "./shared/ui/panel-menu/panel-menu.component";
+import { map } from 'rxjs/operators';
+import { CartService } from "././cart/data-access/cart.service";
+import { inject } from "@angular/core";
 
 @Component({
   selector: "app-root",
@@ -15,4 +18,9 @@ import { PanelMenuComponent } from "./shared/ui/panel-menu/panel-menu.component"
 })
 export class AppComponent {
   title = "ALTEN SHOP";
+  private cartService = inject(CartService);
+
+  cartCount = this.cartService.items$.pipe(
+    map(items => items.length)
+  );
 }

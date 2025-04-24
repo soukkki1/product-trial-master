@@ -1,0 +1,10 @@
+<h2>Mon Panier</h2>
+
+<ul>
+  <li *ngFor="let item of items$ | async; trackBy: trackById">
+    {{ item.name }} — {{ item.price | currency:'EUR' }}
+    <button (click)="onRemove(item)">Supprimer</button>
+  </li>
+</ul>
+
+<p *ngIf="(items$ | async)?.length === 0">Le panier est vide.</p>

@@ -11,6 +11,7 @@
 
                 <ng-template pTemplate="footer">
                     <div class="flex gap-3 mt-1">
+                        <p-button label="Ajouter au panier" icon="pi pi-shopping-cart" (onClick)="onAddToCart(product)"></p-button>
                         <p-button label="Modifier" severity="secondary" (onClick)="onUpdate(product)"/>
                         <p-button label="Supprimer" severity="danger" (onClick)="onDelete(product)" />
                     </div>
